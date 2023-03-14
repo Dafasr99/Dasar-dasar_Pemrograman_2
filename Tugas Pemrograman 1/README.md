@@ -1,0 +1,20 @@
+Nama : Anandafa Syukur Rizky
+NPM : 2106655040
+Kelas : A
+Mata kuliah : Dasar-dasar pemrograman 2
+
+Tugas Pemrograman 1
+
+4532998821135815 - valid
+4532998821135814 - invalid
+371104228409521 - valid
+ - invalid
+5358086678837044 - valid
+5358086678837043 - invalid
+2200504199505004 - ??
+kosong - invalid
+-1 - invalid
+0 - invalid
+1 - invalid
+aaaaa - invalid
+535808667883704353580866788370435358086678837043535808667883704353580866788370435358086678837043 - invalid
