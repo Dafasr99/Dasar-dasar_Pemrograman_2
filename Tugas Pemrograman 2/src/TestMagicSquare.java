@@ -1,5 +1,4 @@
 public class TestMagicSquare {
-
     public static void main(String[] args) {
     
         int n = 0; // size of magic square
@@ -11,21 +10,30 @@ public class TestMagicSquare {
             
             // catch exception if input is not an integer
             } catch (NumberFormatException e) {
-                System.out.println("Input must be a valid integer");
+                System.out.println("Input must be a valid integer & Enter a number less than 100");
                 System.exit(1);
             }
 
-            // catch exception if input is less than 1 or 1
+            // if input is less than 1 or 1
             if ( n <= 1) {
                 System.out.println("Enter a number more than 1");
                 System.exit(1);
-            }
-
-            // catch exception if input is even
-            if(n % 2 == 0) { 
-                System.out.println("Size of square must be odd");
+            // if input is more than 100
+            } else if (n > 100) {
+                System.out.println("Enter a number less than 100");
                 System.exit(1);
             }
+
+            // if input is even
+            if (n % 2 == 0) { 
+                System.out.println("Size of square must be odd");
+                System.exit(1);
+            // if input is more than 100
+            } else if (n > 100) {
+                System.out.println("Enter a number less than 100");
+                System.exit(1);
+            }
+
 
         // catch exception if no input is given
         } else {
