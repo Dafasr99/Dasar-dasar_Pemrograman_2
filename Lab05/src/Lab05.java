@@ -27,7 +27,7 @@ public class Lab05 {
                 choice = Integer.parseInt(input);
                 break;
             } catch (NumberFormatException e) {
-                System.out.print("Invalid input. Please enter an integer.\nInput a number: ");
+                System.out.print("Invalid input. Please enter an integer\nEnter your choice: ");
             } catch (InputMismatchException e) {
                 System.out.print("Invalid input. Please enter an integer.\nEnter your choice: ");
                 scan.nextLine(); // consume the invalid input
