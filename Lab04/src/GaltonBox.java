@@ -22,11 +22,20 @@ public class GaltonBox {
      */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter the number of balls: ");
-        int balls = input.nextInt();
+        int balls = 0;
+        int numberOfSlots = 0;
 
-        System.out.print("Enter the number of slots: ");
-        int numberOfSlots = input.nextInt();
+        try {
+            System.out.print("Enter the number of balls: ");
+            balls = input.nextInt();
+
+            System.out.print("Enter the number of slots: ");
+            numberOfSlots = input.nextInt();
+
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter integers only.");
+            System.exit(0);
+        }
 
         int[] slots = new int[numberOfSlots];
         
