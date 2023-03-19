@@ -11,6 +11,7 @@
  */
 
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class GaltonBox {
     
@@ -24,32 +25,42 @@ public class GaltonBox {
         Scanner input = new Scanner(System.in);
         int balls = 0;
         int numberOfSlots = 0;
-
-        try {
-            System.out.print("Enter the number of balls: ");
-            balls = input.nextInt();
-
-            System.out.print("Enter the number of slots: ");
-            numberOfSlots = input.nextInt();
-
-        } catch (Exception e) {
-            System.out.println("Invalid input. Please enter integers only.");
-            System.exit(0);
+    
+        while (true) {
+            try {
+                System.out.print("Enter the number of balls: ");
+                balls = input.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter integers only.");
+                input.nextLine();
+            }
         }
-
+    
+        while (true) {
+            try {
+                System.out.print("Enter the number of slots: ");
+                numberOfSlots = input.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter integers only.");
+                input.nextLine();
+            }
+        }
+    
         int[] slots = new int[numberOfSlots];
-        
+    
         System.out.println();
-        
-        for (int i = 0; i < balls; i++) {  
+    
+        for (int i = 0; i < balls; i++) {
             slots[onePath(numberOfSlots)]++;
         }
-
+    
         PrintHistogram(slots);
-
+    
         input.close();
     }
-
+    
     /**
      * This method takes in the number of slots and calculates the slot position for a single ball
      * using a random path, and also prints out the path. It returns the final slot position of the ball.
