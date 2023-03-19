@@ -1,3 +1,6 @@
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
 /**
  * GaltonBox.java
  
@@ -9,9 +12,6 @@
  * there are 4 Rs), and for the path RRLLLLL, the ball falls into slotst2]
  * (because there are 2 Rs).
  */
-
-import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class GaltonBox {
     
