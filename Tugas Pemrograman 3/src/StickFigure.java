@@ -11,6 +11,7 @@ public class StickFigure {
     private int armLength; // horizontal length of the arms
     private int armToFloor; // distance from base to arms
     private int armPosition; // # pixels arm is above/below horizontal
+    private int armRotation; // rotation angle of the right arm // Awokawok
 
     // Construct a stick figure given its four attributes
     public StickFigure(int center, int bottom, Color shade, int size) {
@@ -25,32 +26,10 @@ public class StickFigure {
         armToFloor = 2 * height / 3;
         armLength = height / 3;
 
-        // Set initial position of arms and legs
+        // Set initial position and rotation of arms
         legPosition = 0;
         armPosition = 0;
-    }
-
-    // Draw the figure
-    public void draw(Graphics page) {
-        // Compute y-coordinate of top of head
-        int top = baseY - height;
-
-        page.setColor(color);
-
-        // Draw head
-        page.drawOval(baseX - headW / 2, top, headW, headW);
-
-        // Draw the trunk
-        page.drawLine(baseX, top + headW, baseX, baseY - legLength);
-
-        // Draw the legs
-        page.drawLine(baseX, baseY - legLength, baseX - legPosition, baseY);
-        page.drawLine(baseX, baseY - legLength, baseX + legPosition, baseY);
-
-        // Draw the arms
-        int startY = baseY - armToFloor;
-        page.drawLine(baseX, startY, baseX - armLength, startY - armPosition);
-        page.drawLine(baseX, startY, baseX + armLength, startY - armPosition);
+        armRotation = 0;
     }
 
     // Move the figure - first parameter gives the number of pixels over (to the right if over is positive, to the left if over is negative) and up or down
@@ -59,6 +38,39 @@ public class StickFigure {
         baseX += over;
         baseY += down;
     }
+
+// Draw the figure
+public void draw(Graphics page) {
+    // Compute y-coordinate of top of head
+    int top = baseY - height;
+
+    page.setColor(color);
+
+    // Draw head
+    page.drawOval(baseX - headW / 2, top, headW, headW);
+
+    // Draw the trunk
+    page.drawLine(baseX, top + headW, baseX, baseY - legLength);
+
+    // Draw the legs
+    page.drawLine(baseX, baseY - legLength, baseX - legPosition, baseY);
+    page.drawLine(baseX, baseY - legLength, baseX + legPosition, baseY);
+
+    // Draw the arms
+    int startY = baseY - armToFloor;
+
+    int leftArmEndX = baseX - armLength;
+    int rightArmEndX = baseX + armLength;
+
+    // Calculate the y-coordinate of the arms
+    int armY = startY - armPosition;
+
+    // Draw the left arm
+    page.drawLine(baseX, startY, leftArmEndX, armY);
+
+    // Draw the right arm with the same position and rotation as the left arm
+    page.drawLine(baseX, startY, rightArmEndX, armY);
+}
 
     // Increase the height by the given factor (if the factor is > 1 the figure will "grow" else it will shrink)
     public void grow(double factor) {
@@ -69,6 +81,7 @@ public class StickFigure {
         legLength = height / 2;
         armToFloor = 2 * height / 3;
         armLength = height / 3;
+        
     }
 
     // Set the legPosition (dist. from vertical) to a new value
@@ -79,5 +92,10 @@ public class StickFigure {
     // Set the armPosition to a new value
     public void setArmPosition(int newPos) {
         armPosition = newPos;
+    }
+
+    // Set the rotation angle of the right arm
+    public void setArmRotation(int angle) {
+        armRotation = angle;
     }
 }
