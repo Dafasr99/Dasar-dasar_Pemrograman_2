@@ -70,13 +70,6 @@ public class MovePanel extends JPanel {
                     stickMan.setArmPosition(-60);
                     stickMan.setLegPosition(10);
                     break;
-                case KeyEvent.VK_L:
-                    stickMan.setArmPosition(-15); // Awokawok
-                    stickMan.setArmRotation(45);
-                    break;
-                case KeyEvent.VK_R:
-                    stickMan.// Awokawok;
-                    break;
                 default:
                     break;
             }
