@@ -40,38 +40,34 @@ public class MovePanel extends JPanel {
         // Handle a key-pressed event: arrow keys cause the figure to move horizontally or vertically; the g ket causes the figure to "grow", the s key causes the figure to shrink, the u key causes arms and legs to move up, m puts them in the middle, and d down.
         public void keyPressed(KeyEvent event) {
             switch (event.getKeyCode()) {
-                case KeyEvent.VK_LEFT:
-                    stickMan.move(-1 * JUMP, 0);
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    stickMan.move(JUMP, 0);
-                    break;
-                case KeyEvent.VK_UP:
-                    stickMan.move(0, -1 * JUMP);
-                    break;
-                case KeyEvent.VK_DOWN:
-                    stickMan.move(0, JUMP);
-                    break;
-                case KeyEvent.VK_G:
-                    stickMan.grow(1.5);
-                    break;
-                case KeyEvent.VK_S:
-                    stickMan.grow(0.5);
-                    break;
-                case KeyEvent.VK_U:
+                case KeyEvent.VK_LEFT -> stickMan.move(-1 * JUMP, 0);
+                case KeyEvent.VK_RIGHT -> stickMan.move(JUMP, 0);
+                case KeyEvent.VK_UP -> stickMan.move(0, -1 * JUMP);
+                case KeyEvent.VK_DOWN -> stickMan.move(0, JUMP);
+                case KeyEvent.VK_G -> stickMan.grow(1.5);
+                case KeyEvent.VK_S -> stickMan.grow(0.5);
+                case KeyEvent.VK_U -> {
+                    stickMan.setArmDirection("0");
                     stickMan.setArmPosition(60);
                     stickMan.setLegPosition(40);
-                    break;
-                case KeyEvent.VK_M:
+                }
+                case KeyEvent.VK_M -> {
+                    stickMan.setArmDirection("0");
                     stickMan.setArmPosition(0);
                     stickMan.setLegPosition(20);
-                    break;
-                case KeyEvent.VK_D:
+                }
+                case KeyEvent.VK_D -> {
+                    stickMan.setArmDirection("0");
                     stickMan.setArmPosition(-60);
                     stickMan.setLegPosition(10);
-                    break;
-                default:
-                    break;
+                }
+                // press l to move the arm to the left
+                case KeyEvent.VK_L -> stickMan.setArmDirection("l");
+                // press r to move the arm to the right
+                case KeyEvent.VK_R -> stickMan.setArmDirection("r");
+
+                default -> {
+                }
             }
 
             repaint();

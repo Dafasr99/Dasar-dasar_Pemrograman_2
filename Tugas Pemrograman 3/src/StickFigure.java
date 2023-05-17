@@ -11,6 +11,7 @@ public class StickFigure {
     private int armLength; // horizontal length of the arms
     private int armToFloor; // distance from base to arms
     private int armPosition; // # pixels arm is above/below horizontal
+    private String armDirection= "0"; // direction the arm is moving
 
     // Construct a stick figure given its four attributes
     public StickFigure(int center, int bottom, Color shade, int size) {
@@ -48,9 +49,13 @@ public class StickFigure {
         page.drawLine(baseX, baseY - legLength, baseX + legPosition, baseY);
 
         // Draw the arms
-        int startY = baseY - armToFloor;
-        page.drawLine(baseX, startY, baseX - armLength, startY - armPosition);
-        page.drawLine(baseX, startY, baseX + armLength, startY - armPosition);
+        if (armDirection.equals("l")){
+            drawArm(page, "l");
+        } else if (armDirection.equals("r")){
+            drawArm(page, "r");
+        } else {
+            drawArm(page, "0");
+        }
     }
 
     // Move the figure - first parameter gives the number of pixels over (to the right if over is positive, to the left if over is negative) and up or down
@@ -79,5 +84,30 @@ public class StickFigure {
     // Set the armPosition to a new value
     public void setArmPosition(int newPos) {
         armPosition = newPos;
+    }
+
+    public int getArmPosition() {
+        return armPosition;
+    }
+
+    public void setArmDirection(String direction){
+        armDirection = direction;
+    }
+
+    public void drawArm(Graphics page, String pos){
+        int startY = baseY - armToFloor;
+        if (pos.equals("l")){
+            setArmPosition(0);
+            page.drawLine(baseX, startY, baseX - armLength, startY - armPosition + 5);
+            page.drawLine(baseX, startY, baseX - armLength, startY - armPosition + 23);
+        }
+        else if (pos.equals("r")){
+            setArmPosition(0);
+            page.drawLine(baseX, startY, baseX + armLength, startY - armPosition + 5);
+            page.drawLine(baseX, startY, baseX + armLength, startY - armPosition + 23);
+        } else {
+            page.drawLine(baseX, startY, baseX - armLength, startY - armPosition);
+            page.drawLine(baseX, startY, baseX + armLength, startY - armPosition);
+        }
     }
 }
