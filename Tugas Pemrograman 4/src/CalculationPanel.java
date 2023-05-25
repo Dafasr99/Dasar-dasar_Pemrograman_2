@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class CalculationPanel extends JPanel {
     private JTextField infixTextField;
@@ -10,32 +10,33 @@ public class CalculationPanel extends JPanel {
     private JLabel errorMessageLabel;
 
     // Constructor
-    public CalculationPanel() { 
+    public CalculationPanel() {
         setLayout(new BorderLayout());
 
-        // Create labels
+        // Create input panel
         JLabel infixInputLabel = new JLabel("Enter infix expression:");
         JLabel postfixLabel = new JLabel("Postfix expression:");
-        resultLabel = new JLabel();
+        resultLabel = new JLabel("Result:");
         JLabel errorLabel = new JLabel("Error message:");
 
-        // Set font
+        // Create input value panel
         JPanel inputLabelPanel = new JPanel(new GridLayout(4, 1));
         inputLabelPanel.add(infixInputLabel);
         inputLabelPanel.add(postfixLabel);
         inputLabelPanel.add(resultLabel);
         inputLabelPanel.add(errorLabel);
 
-        // Create text fields
+        // Create input value panel
         infixTextField = new JTextField();
         infixTextField.setPreferredSize(new Dimension(200, 25));
+        infixTextField.setBackground(Color.YELLOW);
 
-        // Create text area
+        // Create postfix text area
         postfixTextArea = new JTextArea();
         postfixTextArea.setEditable(false);
         JScrollPane postfixScrollPane = new JScrollPane(postfixTextArea);
 
-        // Create labels
+        // Create result label
         resultLabel = new JLabel();
         resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 14));
         resultLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
@@ -46,65 +47,68 @@ public class CalculationPanel extends JPanel {
         errorMessageLabel.setFont(errorMessageLabel.getFont().deriveFont(Font.BOLD));
         errorMessageLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 
-        // Set font
+        // Create input value panel
         JPanel inputValuePanel = new JPanel(new GridLayout(4, 1));
         inputValuePanel.add(infixTextField);
         inputValuePanel.add(postfixScrollPane);
         inputValuePanel.add(resultLabel);
         inputValuePanel.add(errorMessageLabel);
 
-        // Add components
+        // Add panels to main panel
         add(inputLabelPanel, BorderLayout.WEST);
         add(inputValuePanel, BorderLayout.CENTER);
 
-        // Create calculate button
-        JButton calculateButton = new JButton("Calculate");
-        CalculateButtonListener calculateButtonListener = new CalculateButtonListener();
-        calculateButton.addActionListener(calculateButtonListener);
+        // Add key listener to infix text field
+        infixTextField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
 
-        // Add calculate button
-        add(calculateButton, BorderLayout.EAST);
+            // Calculate postfix expression when enter key is pressed
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    calculate();
+                }
+            }
+
+            // Calculate postfix expression when enter key is released
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
     }
 
-    private class CalculateButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String infixExpression = infixTextField.getText().trim();
+    // Calculate postfix expression
+    private void calculate() {
+        String infixExpression = infixTextField.getText().trim();
 
-            // Check if infix expression is empty
-            if (!infixExpression.isEmpty()) {
-                // Calculate postfix expression
-                try {
+        // Calculate postfix expression if infix expression is not empty
+        if (!infixExpression.isEmpty()) {
 
-                    // Convert infix expression to postfix expression
-                    String postfixExpression = PostfixExpression.convertToPostfix(infixExpression);
-                    long result = PostfixExpression.evaluatePostfix(postfixExpression);
+            // Calculate postfix expression
+            try {
+                String postfixExpression = PostfixExpression.convertToPostfix(infixExpression);
+                long result = PostfixExpression.evaluatePostfix(postfixExpression);
 
-                    // Update text area and label
-                    postfixTextArea.setText(postfixExpression);
-                    resultLabel.setText(String.format("Result:[ %d ]", result));
-                    errorMessageLabel.setText(""); // Clear previous error message
+                // Display postfix expression and result
+                postfixTextArea.setText(postfixExpression);
+                resultLabel.setText(String.format(" %s ", result ));
+                errorMessageLabel.setText("");
 
-                    // Update input label
-                    JLabel infixInputLabel = (JLabel) ((JPanel) getComponent(0)).getComponent(0);
-                    JLabel postfixLabel = (JLabel) ((JPanel) getComponent(0)).getComponent(1);
-                    infixInputLabel.setText(String.format("Enter infix expression:[ %s ]", infixExpression));
-                    postfixLabel.setText(String.format("Postfix expression:[ %s ]", postfixExpression));
-
-                // Catch exceptions
-                } catch (IllegalArgumentException ex) {
-                    String errorMessage = ex.getMessage();
-                    postfixTextArea.setText("");
-                    resultLabel.setText("");
-                    errorMessageLabel.setText(String.format("[ %s ]", errorMessage));
-                
-                // Catch arithmetic exceptions
-                } catch (ArithmeticException ex) {
-                    String errorMessage = ex.getMessage();
-                    postfixTextArea.setText("");
-                    resultLabel.setText("");
-                    errorMessageLabel.setText(String.format(" [ %s ]", errorMessage));
-                }
+            // Display error message if infix expression is invalid
+            } catch (IllegalArgumentException ex) {
+                String errorMessage = ex.getMessage();
+                postfixTextArea.setText("");
+                resultLabel.setText("");
+                errorMessageLabel.setText(String.format("[" + " %s ", errorMessage + " ]" ));
+            
+            // Display error message if postfix expression is invalid
+            } catch (ArithmeticException ex) {
+                String errorMessage = ex.getMessage();
+                postfixTextArea.setText("");
+                resultLabel.setText("");
+                errorMessageLabel.setText(String.format("[" + " %s ", errorMessage + " ]" ));
             }
         }
     }

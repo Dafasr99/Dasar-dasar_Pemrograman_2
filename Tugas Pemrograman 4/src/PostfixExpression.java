@@ -50,10 +50,7 @@ public class PostfixExpression {
                         }
 
                         operatorStack.push(operator);
-                    }
-                
-                } else {
-                    throw new IllegalArgumentException("Invalid expression: Unknown token '" + token + "'");
+                    } 
                 }
             }
         }

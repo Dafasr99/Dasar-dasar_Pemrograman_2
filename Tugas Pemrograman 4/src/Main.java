@@ -4,7 +4,7 @@ import javax.swing.SwingUtilities;
 public class Main {
     public static void main(String[] args) {
 
-        JFrame frame = new JFrame("Postfix Calculator");
+        JFrame frame = new JFrame("Infix -> Postfix Evaluator");
         
         SwingUtilities.invokeLater(() -> {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
